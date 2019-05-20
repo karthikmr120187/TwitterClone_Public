@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TwitterDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="PERSON">
+    <Key>
+      <PropertyRef Name="user_id" />
+    </Key>
+    <Property Name="user_id" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="fullName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="joined" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="active" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="TWEETs" Relationship="TwitterDBModel.PERSONTWEET" FromRole="PERSON" ToRole="TWEET" />
+  </EntityType>
+  <EntityType Name="TWEET">
+    <Key>
+      <PropertyRef Name="tweet_id" />
+    </Key>
+    <Property Name="tweet_id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="None" />
+    <Property Name="user_id" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="message" Type="String" MaxLength="140" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="created" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="FOLLOWINGs" Relationship="TwitterDBModel.TWEETFOLLOWING" FromRole="TWEET" ToRole="FOLLOWING" />
+    <NavigationProperty Name="PERSON" Relationship="TwitterDBModel.PERSONTWEET" FromRole="TWEET" ToRole="PERSON" />
+  </EntityType>
+  <EntityType Name="FOLLOWING">
+    <Key>
+      <PropertyRef Name="user_id" />
+      <PropertyRef Name="following_id" />
+    </Key>
+    <Property Name="user_id" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="following_id" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="TWEET" Relationship="TwitterDBModel.TWEETFOLLOWING" FromRole="FOLLOWING" ToRole="TWEET" />
+  </EntityType>
+  <EntityContainer Name="TwitterDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="People" EntityType="Self.PERSON" />
+    <EntitySet Name="TWEETs" EntityType="Self.TWEET" />
+    <EntitySet Name="FOLLOWINGs" EntityType="Self.FOLLOWING" />
+    <AssociationSet Name="TWEETFOLLOWING" Association="TwitterDBModel.TWEETFOLLOWING">
+      <End Role="TWEET" EntitySet="TWEETs" />
+      <End Role="FOLLOWING" EntitySet="FOLLOWINGs" />
+    </AssociationSet>
+    <AssociationSet Name="PERSONTWEET" Association="TwitterDBModel.PERSONTWEET">
+      <End Role="PERSON" EntitySet="People" />
+      <End Role="TWEET" EntitySet="TWEETs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_user_id" Association="TwitterDBModel.FK_user_id">
+      <End Role="TWEET" EntitySet="TWEETs" />
+      <End Role="TWEET1" EntitySet="TWEETs" />
+    </AssociationSet>
+  </EntityContainer>
+  <Association Name="TWEETFOLLOWING">
+    <End Type="TwitterDBModel.TWEET" Role="TWEET" Multiplicity="1" />
+    <End Type="TwitterDBModel.FOLLOWING" Role="FOLLOWING" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TWEET">
+        <PropertyRef Name="tweet_id" />
+      </Principal>
+      <Dependent Role="FOLLOWING">
+        <PropertyRef Name="TWEET_tweet_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PERSONTWEET">
+    <End Type="TwitterDBModel.PERSON" Role="PERSON" Multiplicity="1" />
+    <End Type="TwitterDBModel.TWEET" Role="TWEET" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PERSON">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="TWEET">
+        <PropertyRef Name="PERSON_user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_user_id">
+    <End Type="TwitterDBModel.TWEET" Role="TWEET" Multiplicity="1" />
+    <End Type="TwitterDBModel.TWEET" Role="TWEET1" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="TWEET">
+        <PropertyRef Name="tweet_id" />
+      </Principal>
+      <Dependent Role="TWEET1">
+        <PropertyRef Name="tweet_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

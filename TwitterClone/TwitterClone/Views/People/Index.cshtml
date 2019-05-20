@@ -1,0 +1,74 @@
+﻿@model TwitterClone.Models.PERSON
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/_LayoutPage.cshtml";
+}
+
+<form >
+    @*<div class="container">
+        <div class="row" style="margin-right: 204px;margin-left: -30px;">
+            <div class="col-sm-8">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.TweetData.tweet_id)
+                <div class="container" style="width:600px;">
+                    <p>What are you doing?</p>
+                    @Html.EditorFor(model => model.TweetData.message, new { htmlAttributes = new { style = "width:250px;height:100px;" } })
+                    @Html.ValidationMessageFor(model => model.TweetData.message, "", new { @class = "text-danger" })
+                </div>
+                <div>
+                    </br>
+                </div>
+                <div class="container">
+                    <input type="submit" name="submit" value="Update" class="btn btn-primary" onclick="location.href='@Url.Action("PostTweet","People",Model.TweetData)'" />
+                </div>
+
+            </div>
+
+
+            <div class="col-sm-4">
+                <p>Following</p>
+                <p>Followers</p>
+            </div>
+
+
+        </div>
+    </div>*@
+    <div>
+        <br />
+    </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Tweets
+        </div>
+        <div class="panel-body">
+
+            @foreach (var item in Model.TWEETs)
+            {
+
+                if (item.user_id == Session["User"].ToString())
+                {
+
+                    <div class="panel" style="border:thick">
+                        @Html.DisplayName("@")
+                        @Html.DisplayFor(modelItem => item.user_id)
+
+                        @Html.DisplayFor(modelItem => item.message)
+
+                        @Html.DisplayFor(modelItem => item.created)
+                        <br />
+                        @Html.ActionLink("Edit", "Edit","Tweets", new { id = item.tweet_id })|| @Html.ActionLink("Delete", "Delete", new { id = item.tweet_id })
+
+
+                    </div>
+
+
+                }
+            }
+        </div>
+
+    </div>
+
+</form>
+
+
+

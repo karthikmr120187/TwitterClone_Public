@@ -1,0 +1,46 @@
+﻿@model IEnumerable<TwitterClone.Models.TWEET>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/_LayoutPage.cshtml";
+}
+
+
+<form>
+    <p>
+        <div class="container">
+           <h2> @Html.ActionLink("Click to tweet", "Create")</h2>
+        </div>
+    </p>
+
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Tweets
+        </div>
+        <div class="panel-body">
+
+            
+            @foreach (var item in Model)
+            {
+
+                if (item.user_id == Session["User"].ToString())
+                {
+
+                    <div class="panel" style="border:thick">
+                        @Html.DisplayName("@")
+                        @Html.DisplayFor(modelItem => item.user_id)
+                        @Html.DisplayFor(modelItem => item.message)
+                        @Html.DisplayFor(modelItem => item.created)
+                        <br />
+                        @Html.ActionLink("Edit", "Edit", new { id = item.tweet_id })
+                        @Html.ActionLink("Delete", "Delete", new { id = item.tweet_id })
+                    </div>
+                }
+            }
+        </div>
+
+    </div>
+
+
+</form>

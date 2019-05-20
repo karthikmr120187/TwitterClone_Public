@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <div class="container" style="background-color:deepskyblue">
+        <h1 class="text-center">My Twitter Clone </h1>
+    </div>
+    <style type="text/css">
+        .login-form {
+            width: 600px;
+            margin: 30px auto;
+        }
+
+            .login-form form {
+                margin-bottom: 15px;
+                background: #f7f7f7;
+                box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+                padding: 30px;
+            }
+
+            .login-form h2 {
+                margin: 0 0 15px;
+            }
+
+        .form-control, .btn {
+            min-height: 38px;
+            border-radius: 2px;
+        }
+
+        .btn {
+            font-size: 15px;
+            font-weight: bold;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="container" style="border:transparent" >
+        <div>
+            <ul class="nav nav-pills navbar-right">
+                <li role="presentation"><a href="@Url.Action("Index","FOLLOWING")">Welcome @Session["user"]!</a></li>
+                <li role="presentation"><a href="@Url.Action("Index","TWEETs")"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
+                <li role="presentation"><a href="@Url.Action("Index", "Profile")"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a></li>
+                <li role="presentation"><a href="@Url.Action("Index", "Login")"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a> </li>
+                <li role="presentation"><a href="@Url.Action("Login", "Login")"><span class="glyphicon glyphicon-off" aria-hidden="true"></span></a> </li>
+                
+            </ul>
+        </div>
+        <div></div>
+     </div> 
+    
+        <div class="login-form">
+            @RenderBody()
+        </div>
+</body>
+</html>

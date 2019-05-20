@@ -1,0 +1,66 @@
+﻿@model TwitterClone.PERSON
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>PERSON</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.password)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.password)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.fullName)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.fullName)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.email)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.email)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.joined)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.joined)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.active)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.active)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.user_id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

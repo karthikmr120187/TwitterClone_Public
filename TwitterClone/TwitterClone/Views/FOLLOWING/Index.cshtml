@@ -1,0 +1,65 @@
+﻿@model TwitterClone.Models.FOLLOWING
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/_LayoutPage.cshtml";
+}
+<form>
+
+    @foreach (var item in Model.PERSON)
+    {
+        
+        if (item.user_id != Session["user"].ToString())
+        {
+            if (ViewBag.follower.Count == 0)
+            {
+                <div class="panel panel-primary" style="width:150px;">
+                    <div class="panel-body" style="width:150px;">
+
+                        @Html.DisplayFor(modelItem => item.user_id)
+
+                        <u><a href="@Url.Action("Create", "FOLLOWING", new { userid=item.user_id.ToString() })">Follow</a></u>
+
+                    </div>
+                </div>
+            }
+
+            else
+            {
+                foreach (var x in ViewBag.follower)
+                {
+                    if (x == item.user_id)
+                    {
+                        <div class="panel panel-primary" style="width:150px;">
+                            <div class="panel-body">
+
+                                @Html.DisplayFor(modelItem => item.user_id)
+
+                                <u>
+                                    <a href="@Url.Action("Delete", "FOLLOWING",new { userid=item.user_id.ToString() })">UnFollow</a>
+                                </u>
+
+                            </div>
+                        </div>
+                    }
+
+                    @*else
+                    {
+                        <div class="panel panel-primary" style="width:150px;">
+                            <div class="panel-body" style="width:150px;">
+
+                                @Html.DisplayFor(modelItem => item.user_id)
+
+                                <u><a href="@Url.Action("Create", "FOLLOWING",new { userid=item.user_id.ToString() })">Follow</a></u>
+
+                            </div>
+                        </div>
+
+                    }*@
+                }
+
+            }
+        }
+    }
+
+</form>
